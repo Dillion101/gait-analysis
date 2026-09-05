@@ -1,0 +1,11 @@
+# Core experiment environment; exact versions were not recorded in the original notebooks.
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+seaborn
+opencv-python
+tensorflow
+keras
+torch
