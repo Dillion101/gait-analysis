@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="An interactive research case study on silhouette feature representation for gait recognition." />
+    <meta name="theme-color" content="#0a0c0b" />
+    <title>Silhouette / Signal - Gait Recognition Research</title>
+    <script>document.documentElement.dataset.theme = localStorage.getItem("gait-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <span class="brand-mark">S/S</span>
+        <span>Silhouette / Signal</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#journey">Journey</a>
+        <a href="#lab">Feature lab</a>
+        <a href="#gaitstar">GaitSTAR</a>
+        <a href="#results">Results</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme"><span aria-hidden="true">◐</span><b>Theme</b></button>
+        <a class="text-link repository-link" href="https://github.com/Dillion101/gait-analysis" target="_blank" rel="noreferrer">View code ↗</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero section-pad">
+        <div class="eyebrow reveal"><span class="pulse"></span> Undergraduate research · 2024</div>
+        <div class="hero-grid">
+          <div>
+            <h1 class="reveal">Can the shape of motion become a <em>signature?</em></h1>
+            <p class="hero-copy reveal">We investigated how the way we compress a walking sequence into an image changes a neural network’s ability to recognise a person.</p>
+            <div class="hero-actions reveal">
+              <a class="button primary" href="#lab">Explore the experiment <span>↓</span></a>
+              <a class="button ghost" href="#results">See the findings</a>
+              <button class="button ghost" id="gaitOpen" type="button">What is gait?</button>
+              <button class="button ghost" id="tourOpen" type="button">Guided walkthrough</button>
+            </div>
+          </div>
+          <div class="hero-visual reveal" aria-label="Animated sequence of gait silhouettes">
+            <div class="radar-lines"></div>
+            <div class="frame frame-back"><img src="assets/views/057_nm-01_054.png" alt="" /></div>
+            <div class="frame frame-mid"><img src="assets/views/057_nm-01_072.png" alt="" /></div>
+            <div class="frame frame-front"><img src="assets/views/057_nm-01_090.png" alt="DEWGI representation of a walking subject viewed from 90 degrees" /></div>
+            <div class="visual-label"><span>SUBJECT 057</span><span>VIEW 090°</span></div>
+          </div>
+        </div>
+        <dl class="hero-stats reveal">
+          <div><dt>05</dt><dd>Representations compared</dd></div>
+          <div><dt>02</dt><dd>CNN architectures tested</dd></div>
+          <div><dt>11</dt><dd>Camera viewpoints</dd></div>
+          <div class="accent-stat"><dt>98.7%</dt><dd>Enhanced GaitSTAR accuracy*</dd></div>
+        </dl>
+      </section>
+
+      <section class="marquee" aria-label="Research topics">
+        <div class="marquee-track">
+          <div class="marquee-group">COMPUTER VISION <i>✦</i> BIOMETRICS <i>✦</i> DEEP LEARNING <i>✦</i> FEATURE ENGINEERING <i>✦</i> GAIT RECOGNITION <i>✦</i> PATTERN RECOGNITION <i>✦</i> OPTICAL FLOW <i>✦</i> NEURAL NETWORKS <i>✦</i> HUMAN IDENTIFICATION <i>✦</i> RESEARCH <i>✦</i></div>
+          <div class="marquee-group" aria-hidden="true">COMPUTER VISION <i>✦</i> BIOMETRICS <i>✦</i> DEEP LEARNING <i>✦</i> FEATURE ENGINEERING <i>✦</i> GAIT RECOGNITION <i>✦</i> PATTERN RECOGNITION <i>✦</i> OPTICAL FLOW <i>✦</i> NEURAL NETWORKS <i>✦</i> HUMAN IDENTIFICATION <i>✦</i> RESEARCH <i>✦</i></div>
+        </div>
+      </section>
+
+      <section id="research" class="section-pad research-section">
+        <div class="section-index">01 / THE QUESTION</div>
+        <div class="research-grid">
+          <h2>Recognition begins<br />before the model.</h2>
+          <div>
+            <p class="lead">A gait cycle may contain dozens of silhouette frames. A feature representation compresses that sequence into a form a classifier can learn - but every compression preserves some signals and discards others.</p>
+            <p>This project asked which representations carry the most useful identity information, and whether combining static shape with dynamic movement could improve recognition.</p>
+            <div class="question-card">
+              <span>Research hypothesis</span>
+              <p>Representations that preserve both appearance and temporal change will outperform methods that isolate either signal.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="journey" class="journey-section section-pad">
+        <div class="section-index light">02 / THE RESEARCH JOURNEY</div>
+        <div class="journey-heading">
+          <h2>Before we trained a model,<br />we mapped the field.</h2>
+          <p>The project began as a structured literature review. Search results were progressively narrowed, relevant methods were logged in an extraction sheet, and evidence about strengths and weaknesses shaped what we eventually implemented.</p>
+        </div>
+
+        <div class="screening-studio">
+          <div class="funnel-panel">
+            <div class="panel-label"><span>LITERATURE SCREENING</span><b>Click a stage</b></div>
+            <div class="funnel" role="list" aria-label="Literature screening stages">
+              <button class="funnel-step active" data-stage="search" style="--size:100%"><span>01</span><strong>6,952</strong><small>Initial results</small></button>
+              <button class="funnel-step" data-stage="protocol" style="--size:72%"><span>02</span><strong>707</strong><small>After protocol filters</small></button>
+              <button class="funnel-step" data-stage="abstract" style="--size:52%"><span>03</span><strong>279</strong><small>After abstract review</small></button>
+              <button class="funnel-step" data-stage="final" style="--size:34%"><span>04</span><strong>72</strong><small>Core review set</small></button>
+            </div>
+          </div>
+          <div class="screening-detail" aria-live="polite">
+            <span id="screeningLabel">STAGE 01 · DISCOVERY</span>
+            <div class="screening-number" id="screeningNumber">6,952</div>
+            <h3 id="screeningTitle">A deliberately broad search</h3>
+            <p id="screeningCopy">Search strings around gait, silhouettes, feature representation, and biometric recognition produced a wide pool across the databases recorded in the extraction sheet.</p>
+            <div class="database-split"><div><i id="sourceScienceBar" style="--portion:77%"></i><span>ScienceDirect</span><b id="sourceScience">5,348</b></div><div><i id="sourceIeeeBar" style="--portion:12%"></i><span>IEEE Xplore</span><b id="sourceIeee">837</b></div><div><i id="sourceSpringerBar" style="--portion:11%"></i><span>Springer Link</span><b id="sourceSpringer">767</b></div></div>
+            <p class="source-note">Source names and stage counts follow the workbook’s “Search Parameters” sheet. The written report names Scopus instead of Springer Link; the original records do not resolve that discrepancy.</p>
+          </div>
+        </div>
+
+        <div class="criteria-grid">
+          <div><span>KEPT</span><h3>Inclusion criteria</h3><ul><li>Published from 2014 onward</li><li>Focused on silhouette feature representation</li><li>Written in English</li><li>Full text available</li><li>Clear and relevant methodology</li></ul></div>
+          <div><span>CUT</span><h3>Reasons for exclusion</h3><ul><li>Outside the gait-recognition question</li><li>Non-silhouette or unrelated sensor focus</li><li>Duplicate database records</li><li>Insufficient methodological relevance</li><li>Failed abstract or full-text review</li></ul></div>
+          <blockquote>72 was the core review set recorded by the original search funnel - not the total number of papers collected during the whole project.</blockquote>
+        </div>
+
+        <div class="extraction-explorer">
+          <div class="extraction-intro">
+            <div><span class="mini-label">THE EXTRACTION SHEET</span><h2>Evidence became structured data.</h2></div>
+            <div><p>For every candidate paper, the working sheet tracked its reference, title, objective, representation, publication year, and journal. Separate sheets counted reported strengths, weaknesses, and how often techniques appeared.</p><div class="sheet-stats"><span><b>85</b> workbook entries</span><span><b>84</b> unique titles</span><span><b>95</b> archived PDFs</span><span><b>7</b> analysis sheets</span></div></div>
+          </div>
+          <div class="paper-browser">
+            <div class="paper-controls">
+              <label><span>SEARCH THE SAMPLE</span><input id="paperSearch" type="search" placeholder="Title, method, journal…" /></label>
+              <div class="paper-filters" id="paperFilters"><button class="active" data-filter="all">All 85</button><button data-filter="energy">Energy / entropy</button><button data-filter="flow">Flow / motion</button><button data-filter="modern">Deep / modern</button><button data-filter="other">Other</button></div>
+            </div>
+            <div class="paper-table" role="table" aria-label="Sample from the project extraction sheet">
+              <div class="paper-row paper-head" role="row"><button id="paperYearSort" type="button" aria-label="Sort papers oldest first">YEAR ↓</button><span>PAPER TITLE</span><span>REPRESENTATION</span><span>JOURNAL / VENUE</span></div>
+              <div id="paperRows"></div>
+              <div class="paper-empty" id="paperEmpty" hidden>No matching paper in the extraction-sheet inventory.</div>
+              <button class="paper-more" id="paperMore" type="button">Show all 85 entries ↓</button>
+            </div>
+            <p class="sheet-note"><span id="paperCount">85 entries</span> · Every titled row from the project workbook is included. One title appears twice with different recorded representations. Paper titles are shown without inline academic references for light exploration; full details remain in the extraction sheet and report.</p>
+          </div>
+        </div>
+
+        <div class="decision-bridge">
+          <span>WHAT THE REVIEW CHANGED</span>
+          <p>GEI was dominant and efficient, but repeatedly associated with information loss. GEnI captured variability; GFI captured motion but at higher computational cost. That tension led us first to compare representations under matched classifiers - and then to combine complementary cues through DEWGI and the GaitSTAR adaptation.</p>
+          <a href="#lab">Continue to the experiments ↓</a>
+        </div>
+      </section>
+
+      <section class="method-section section-pad">
+        <div class="section-index">03 / EXPERIMENTAL PIPELINE</div>
+        <h2>From a walk to a prediction.</h2>
+        <div class="pipeline" role="list">
+          <article role="listitem"><span>01</span><div class="pipeline-icon">▥</div><h3>Silhouette sequences</h3><p>Normal walking sequences from CASIA-B, spanning 124 identities and 11 camera angles.</p></article>
+          <article role="listitem"><span>02</span><div class="pipeline-icon">◫</div><h3>Feature extraction</h3><p>Each cycle was encoded as GEI, GEnI, GFI, MSI, or the proposed DEWGI representation.</p></article>
+          <article role="listitem"><span>03</span><div class="pipeline-icon">⌘</div><h3>Classification</h3><p>Matched datasets were trained and evaluated with DenseNet and ResNet architectures.</p></article>
+          <article role="listitem"><span>04</span><div class="pipeline-icon">⌁</div><h3>Comparison</h3><p>Final test accuracy and cross-entropy loss exposed the effect of representation choice.</p></article>
+        </div>
+        <p class="protocol-note">Protocol scope: this project used CASIA-B <strong>normal walking conditions only</strong>. Reported metrics should be read within that experimental setup.</p>
+      </section>
+
+      <section id="lab" class="lab-section section-pad">
+        <div class="section-index light">04 / INTERACTIVE FEATURE LAB</div>
+        <div class="lab-heading">
+          <div><h2>One walk.<br />Five interpretations.</h2><p>Select a method to see how the same subject and view become a different machine-readable signal.</p></div>
+          <div class="sample-id">SAMPLE <strong>#057 - NM01 - 090°</strong></div>
+        </div>
+        <div class="lab-workbench">
+          <div class="method-tabs" role="tablist" aria-label="Feature representations">
+            <button class="method-tab active" role="tab" aria-selected="true" data-method="gei"><span>01</span> GEI</button>
+            <button class="method-tab" role="tab" aria-selected="false" data-method="geni"><span>02</span> GEnI</button>
+            <button class="method-tab" role="tab" aria-selected="false" data-method="gfi"><span>03</span> GFI</button>
+            <button class="method-tab" role="tab" aria-selected="false" data-method="msi"><span>04</span> MSI</button>
+            <button class="method-tab" role="tab" aria-selected="false" data-method="dewgi"><span>05</span> DEWGI <b>PROPOSED</b></button>
+          </div>
+          <div class="feature-stage">
+            <div class="crosshair x"></div><div class="crosshair y"></div>
+            <img id="featureImage" src="assets/representations/gei.png" alt="Gait Energy Image representation" />
+            <div class="scan-line"></div>
+          </div>
+          <div class="method-copy" aria-live="polite">
+            <div><span class="method-code" id="methodCode">GEI</span><span class="method-type" id="methodType">APPEARANCE-BASED</span></div>
+            <h3 id="methodName">Gait Energy Image</h3>
+            <p id="methodDescription">Averages every silhouette in the gait cycle. Stable body regions remain bright; moving limbs become softer traces.</p>
+            <dl><div><dt>Captures</dt><dd id="methodCaptures">Shape + averaged motion</dd></div><div><dt>DenseNet result</dt><dd id="methodDense">88.41%</dd></div><div><dt>ResNet result</dt><dd id="methodRes">81.42%</dd></div></dl>
+          </div>
+        </div>
+        <div class="model-explainer">
+          <div class="model-question"><span>WHY TWO CLASSIFIERS?</span><p>Testing every representation with two different CNN families helped us ask whether performance came from the input representation or depended on one particular architecture.</p></div>
+          <article><span>DENSENET</span><h3>Reuse what earlier layers learned.</h3><p>DenseNet connects each layer to later layers, encouraging feature reuse and stronger gradient flow. In our matched experiments it achieved the higher accuracy and lower cross-entropy loss for all five representations.</p><small>BEST PAIR · DEWGI 92.34% · LOSS 0.27</small></article>
+          <article><span>RESNET</span><h3>Learn corrections through shortcuts.</h3><p>ResNet uses residual connections so deeper blocks learn adjustments to an identity path. It provided a second architectural test of each representation and also ranked DEWGI first.</p><small>BEST PAIR · DEWGI 88.17% · LOSS 0.51</small></article>
+        </div>
+      </section>
+
+      <section class="views-section section-pad">
+        <div class="section-index">05 / VIEWPOINT CHALLENGE</div>
+        <div class="views-grid">
+          <div><h2>The same person looks different from every angle.</h2><p>Viewpoint variation is one of gait recognition’s defining challenges. Drag the control to inspect the project’s DEWGI output across all eleven CASIA-B camera positions.</p></div>
+          <div class="view-console">
+            <div class="view-screen"><img id="viewImage" src="assets/views/057_nm-01_090.png" alt="DEWGI sample at 90 degrees" /><span id="viewAngle">090°</span></div>
+            <input id="angleSlider" type="range" min="0" max="10" value="5" step="1" aria-label="Camera angle" />
+            <div class="angle-labels"><span>000°</span><span>090°</span><span>180°</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gaitstar" class="gaitstar-section section-pad">
+        <div class="section-index">06 / ENHANCED GAITSTAR</div>
+        <div class="gaitstar-intro">
+          <div>
+            <div class="contribution-tag">CONTRIBUTION 02</div>
+            <h2>We did not stop at representation comparison.</h2>
+          </div>
+          <div>
+            <p class="lead">GaitSTAR combines spatial appearance with temporal motion and uses attention to emphasise discriminative evidence. We carried that premise into a project-specific feature pipeline and a deeper recognition network.</p>
+            <p>Instead of treating the method as a black-box baseline, we reworked preprocessing, feature fusion, classifier depth, supervision, augmentation, and optimisation.</p>
+          </div>
+        </div>
+
+        <div class="gaitstar-system">
+          <div class="gaitstar-image">
+            <span>FUSED REPRESENTATION · SUBJECT 057 · 090°</span>
+            <img src="assets/representations/gaitstar.png" alt="Enhanced GaitSTAR fused representation for subject 057 at 90 degrees" />
+            <small>CNN appearance features + dense optical flow + temporal weighting</small>
+          </div>
+          <div class="architecture-map" aria-label="Implemented Enhanced GaitSTAR architecture">
+            <div class="arch-node"><span>01</span><strong>7×7 stem</strong><small>Broad spatial context</small></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-stack">
+              <div class="arch-node"><span>02</span><strong>Residual stages</strong><small>3 · 4 · 6 · 3 blocks</small></div>
+              <div class="attention-rings"><i></i><i></i><i></i><i></i><b>CHANNEL ATTENTION × 4</b></div>
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node"><span>03</span><strong>512-D feature</strong><small>Global pool + reduction</small></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node"><span>04</span><strong>Dual heads</strong><small>Main + auxiliary supervision</small></div>
+          </div>
+        </div>
+
+        <div class="enhancement-browser">
+          <div class="enhancement-tabs" role="tablist" aria-label="Implemented GaitSTAR enhancements">
+            <button class="enhancement-tab active" data-enhancement="representation" aria-selected="true"><span>01</span>Representation</button>
+            <button class="enhancement-tab" data-enhancement="architecture" aria-selected="false"><span>02</span>Architecture</button>
+            <button class="enhancement-tab" data-enhancement="supervision" aria-selected="false"><span>03</span>Supervision</button>
+            <button class="enhancement-tab" data-enhancement="training" aria-selected="false"><span>04</span>Training</button>
+          </div>
+          <div class="enhancement-detail" aria-live="polite">
+            <span id="enhancementLabel">WHAT CHANGED · 01</span>
+            <h3 id="enhancementTitle">A fused sequence descriptor</h3>
+            <p id="enhancementCopy">CLAHE and bilateral filtering prepare each frame. A small CNN extracts appearance cues while Farneback optical flow captures magnitude and direction. Temporal weights pool both streams into one feature image.</p>
+            <div id="enhancementSpecs"><b>CLAHE contrast</b><b>Edge-preserving filter</b><b>Dense optical flow</b><b>Temporal pooling</b></div>
+          </div>
+        </div>
+
+        <div class="gaitstar-result">
+          <div><span class="mini-label">BEST RECORDED TEST ACCURACY</span><strong>98.712<small>%</small></strong><p>124-way classification under the project’s normal-condition split. An earlier classifier iteration recorded 94.911%; because architecture, optimisation, augmentation, and epoch count changed together, that comparison is a development milestone - not a component-by-component ablation.</p></div>
+          <div class="benchmark-bars" aria-label="Reported comparison from the final documentation">
+            <div><span>GaitGraph</span><i style="--score:87.7%"></i><b>87.7%</b></div>
+            <div><span>Gait-D</span><i style="--score:91.6%"></i><b>91.6%</b></div>
+            <div><span>GaitPart</span><i style="--score:96.2%"></i><b>96.2%</b></div>
+            <div><span>Original GaitSTAR</span><i style="--score:97.4%"></i><b>97.4%</b></div>
+            <div class="enhanced"><span>Our experiment</span><i style="--score:98.712%"></i><b>98.712%</b></div>
+          </div>
+          <p class="benchmark-note">Context reproduced from the final report. This was not a controlled ablation or independent reimplementation of every baseline; comparisons may inherit protocol differences.</p>
+        </div>
+
+        <div class="honesty-note"><span>WHY WE FRAME THIS CAREFULLY</span><p>The 98.712% value is a saved notebook result, not a peer-reviewed claim. Some analysis cells later in the notebook use simulated confidence values for visualisation; those plots are not presented here as experimental evidence. The showcase separates recorded classification accuracy from illustrative analysis.</p></div>
+      </section>
+
+      <section id="results" class="results-section section-pad">
+        <div class="section-index">07 / SFRT RESULTS</div>
+        <div class="results-heading"><h2>The representation mattered.</h2><div class="model-switch" role="group" aria-label="Select classifier"><button class="active" data-model="dense">DenseNet</button><button data-model="res">ResNet</button></div></div>
+        <div class="results-grid">
+          <div class="chart" id="chart" aria-label="Accuracy by feature representation"></div>
+          <aside class="finding-card">
+            <span class="mini-label">KEY FINDING</span>
+            <div class="big-number" id="bestScore">92.34<span>%</span></div>
+            <h3 id="bestTitle">DEWGI + DenseNet</h3>
+            <p id="bestCopy">The proposed representation led the five-method comparison, improving on GEI by 3.93 percentage points.</p>
+            <div class="loss-row"><span>Cross-entropy loss</span><strong id="bestLoss">0.27</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="reproducibility" class="repro-section section-pad">
+        <div class="section-index">08 / REPRODUCIBILITY RECORD</div>
+        <div class="repro-heading"><h2>What the notebooks let us reconstruct.</h2><p>This record comes from executable cells, saved outputs, and notebook metadata - not retrospective estimates. Open each panel for the exact experimental choices and known limitations.</p></div>
+        <div class="repro-grid">
+          <details open><summary><span>01</span>Data and split<b>＋</b></summary><div><p>GEI, GEnI, GFI, and DEWGI contain 8,155 derived images; MSI and Enhanced GaitSTAR record 8,154. Images were grayscale at 240×240 with 124 identity labels.</p><ul><li>80/20 row-level random split</li><li><code>random_state=42</code> for splitting</li><li>6,524/1,631 samples for most methods</li><li>6,523/1,631 for MSI and GaitSTAR</li><li>Training-mean centering applied to test data</li></ul></div></details>
+          <details><summary><span>02</span>DenseNet recipe<b>＋</b></summary><div><p>All five representations used the same DenseNet training function for the matched comparison.</p><ul><li>Adam, learning rate 0.0001</li><li>Categorical cross-entropy</li><li>Batch size 32; maximum 50 epochs</li><li>Rotation ±10°, width/height shifts 0.1, horizontal flips</li><li>Early stopping on holdout accuracy, patience 10</li></ul></div></details>
+          <details><summary><span>03</span>ResNet recipe<b>＋</b></summary><div><p>The ResNet experiments used a residual image classifier with checkpoints and scheduled learning rates.</p><ul><li>Adam, initial learning rate 0.001</li><li>Categorical cross-entropy</li><li>Batch size 32; 100 epochs</li><li>Learning-rate schedule plus ReduceLROnPlateau</li><li>Best checkpoint selected by holdout accuracy</li></ul></div></details>
+          <details><summary><span>04</span>Enhanced GaitSTAR recipe<b>＋</b></summary><div><p>The final PyTorch model used the enhanced residual-attention architecture documented above.</p><ul><li>Batch size 32; 150 epochs</li><li>AdamW, learning rate 0.001, weight decay 0.05</li><li>Label smoothing 0.1</li><li>Cosine OneCycle learning-rate schedule</li><li>Auxiliary loss weight 0.4; gradient norm capped at 1.0</li></ul></div></details>
+          <details class="audit"><summary><span>05</span>Environment and limitations<b>＋</b></summary><div><p>The notebooks record Python 3.10.14, Kaggle GPU runtimes, CUDA execution, and Tesla T4 acceleration for most DenseNet/ResNet runs. Kaggle image IDs range from 30775 to 30787.</p><ul><li>Exact TensorFlow, PyTorch, and CUDA package versions were not printed</li><li>No global NumPy/TensorFlow/PyTorch training seeds were set</li><li>The holdout set was used for monitoring and final evaluation</li><li>Enhanced GaitSTAR saved the epoch with the best holdout/test accuracy</li><li>This means results are reproducible in structure, but not guaranteed bit-for-bit</li></ul></div></details>
+        </div>
+      </section>
+
+      <section class="takeaway-section section-pad">
+        <div class="section-index light">09 / WHAT I LEARNED</div>
+        <blockquote>“The input is not just preparation for the model. It is part of the model’s argument about the world.”</blockquote>
+        <div class="takeaway-grid">
+          <div><span>01</span><h3>Feature design changes outcomes</h3><p>The same classifier shifted materially when the sequence encoding changed.</p></div>
+          <div><span>02</span><h3>Fusion was effective</h3><p>DEWGI’s mix of static and dynamic cues was the most reliable of the five representations tested.</p></div>
+          <div><span>03</span><h3>Scope shapes every claim</h3><p>Strong normal-condition results do not automatically imply robustness to clothing, bags, or unseen settings.</p></div>
+        </div>
+      </section>
+
+      <section class="ownership-section section-pad">
+        <div class="section-index">10 / CONTRIBUTIONS</div>
+        <div class="ownership-heading"><h2>A collaborative report.<br />A codebase I led.</h2><p>Clear authorship matters. The project combined complementary strengths in implementation, analysis, and academic reading.</p></div>
+        <div class="ownership-grid">
+          <article class="owner-primary"><span>DILLION AMARTEY</span><h3>Code, methodology, and experiments</h3><ul><li>Authored most of the project code and all code published in this repository</li><li>Implemented feature extraction and classification experiments</li><li>Wrote Chapter 3: Methodology</li><li>Wrote Chapter 4: Results and Discussion</li><li>Co-wrote Chapter 5: Conclusion with Jake</li><li>Contributed to literature collection, screening, filtering, and the wider research process</li></ul></article>
+          <article><span>JAKE SOMPA ASAMOAH</span><h3>Literature, data collection, and research writing</h3><ul><li>Wrote Chapter 1: Introduction</li><li>Wrote Chapter 2: Literature Review</li><li>Contributed substantially to data collection, literature screening, filtering, and the wider research process</li><li>Co-wrote Chapter 5: Conclusion with Dillion</li></ul></article>
+          <article><span>SUPERVISION</span><h3>Dr Aziz Abdullah Dwumfuor</h3><p>Supervised the final-year project at the Department of Computer Science, University of Ghana.</p></article>
+        </div>
+      </section>
+
+      <section class="credits section-pad">
+        <div>
+          <span class="mini-label">PROJECT</span>
+          <h2>Impact of Silhouette Feature Representation on Gait Analysis</h2>
+          <p>An unpublished final-year undergraduate research project completed at the Department of Computer Science, University of Ghana, September 2024.</p>
+        </div>
+        <dl>
+          <div><dt>Researchers</dt><dd>Dillion Amartey<br />Jake Sompa Asamoah</dd></div>
+          <div><dt>Supervisor</dt><dd>Dr Aziz Abdullah Dwumfuor</dd></div>
+          <div><dt>Tools</dt><dd>Python · TensorFlow · PyTorch<br />OpenCV · Kaggle</dd></div>
+          <div><dt>Contact</dt><dd><a href="mailto:damartey008@gmail.com">Email</a><br /><a href="https://www.linkedin.com/in/dillion-amartey-85951527b" target="_blank" rel="noreferrer">LinkedIn ↗</a><br /><a href="https://portfolio-tau-lyart-yqavyjszgv.vercel.app/" target="_blank" rel="noreferrer">Portfolio ↗</a></dd></div>
+        </dl>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Silhouette / Signal</strong><span>Research case study by Dillion Amartey</span><a href="mailto:damartey008@gmail.com">damartey008@gmail.com</a><a href="https://www.linkedin.com/in/dillion-amartey-85951527b" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://portfolio-tau-lyart-yqavyjszgv.vercel.app/" target="_blank" rel="noreferrer">Portfolio ↗</a></div>
+      <a class="button primary repository-link" href="https://github.com/Dillion101/gait-analysis" target="_blank" rel="noreferrer">Explore the code <span>↗</span></a>
+      <p>* Accuracy figures are reported from the project notebooks and final documentation; the work is unpublished and not peer-reviewed.</p>
+    </footer>
+    <dialog class="tour-dialog" id="tourDialog" aria-labelledby="tourTitle">
+      <div class="tour-progress"><span id="tourProgress"></span></div>
+      <button class="tour-close" id="tourClose" type="button" aria-label="Close walkthrough">×</button>
+      <span class="mini-label" id="tourStep">GUIDED WALKTHROUGH · 1 / 6</span>
+      <h2 id="tourTitle">The question came first.</h2>
+      <p id="tourCopy">Could the way a walking sequence is compressed determine how well a neural network recognises the walker? That question connected our literature review, feature experiments, and final model.</p>
+      <div class="tour-actions"><button class="button ghost" id="tourBack" type="button">← Back</button><button class="button primary" id="tourNext" type="button">Next chapter →</button></div>
+    </dialog>
+    <dialog class="tour-dialog gait-dialog" id="gaitDialog" aria-labelledby="gaitTitle">
+      <button class="tour-close" id="gaitClose" type="button" aria-label="Close gait explanation">×</button>
+      <span class="mini-label">A 60-SECOND INTRODUCTION</span>
+      <h2 id="gaitTitle">What is gait?</h2>
+      <p>Gait is the characteristic way a person walks. It contains patterns in posture, rhythm, stride, and limb movement that can help distinguish one walker from another.</p>
+      <div class="gait-steps">
+        <article><span>01</span><div><strong>Record the walk</strong><p>A camera captures a short sequence of someone walking from a particular viewpoint.</p></div></article>
+        <article><span>02</span><div><strong>Keep the silhouette</strong><p>Each frame is reduced to the person’s outline, limiting distractions such as clothing colour and background detail.</p></div></article>
+        <article><span>03</span><div><strong>Compress the movement</strong><p>Multiple silhouettes become one feature image. Our study compared five ways to create that image.</p></div></article>
+        <article><span>04</span><div><strong>Learn the identity signal</strong><p>DenseNet and ResNet tested the feature images, followed by our work to enhance GaitSTAR.</p></div></article>
+      </div>
+      <p class="gait-scope"><strong>What this project was not:</strong> a medical diagnosis system. It studied biometric identification using normal walking sequences from the CASIA-B dataset.</p>
+      <div class="tour-actions gait-actions"><button class="button primary" id="gaitContinue" type="button">See how we did it ↓</button></div>
+    </dialog>
+    <script src="papers.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
