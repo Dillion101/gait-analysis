@@ -22,7 +22,7 @@ function updateThemeButton() {
 themeToggle.addEventListener("click", () => {
   const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
   document.documentElement.dataset.theme = next;
-  localStorage.setItem("gait-theme", next);
+  localStorage.setItem("dillion-theme", next);
   updateThemeButton();
 });
 updateThemeButton();
@@ -73,7 +73,7 @@ function renderPapers() {
       return paperSortDescending ? yearB - yearA || a.title.localeCompare(b.title) : yearA - yearB || a.title.localeCompare(b.title);
     });
   const visible = papersExpanded ? matching : matching.slice(0, 12);
-  paperRows.innerHTML = visible.map((paper) => `<div class="paper-row" role="row"><span>${paper.year}</span><span>${paper.title}</span><span>${paper.method}</span><span>${paper.journal}</span></div>`).join("");
+  paperRows.innerHTML = visible.map((paper) => `<div class="paper-row" role="row"><span role="cell">${paper.year}</span><span role="cell">${paper.title}</span><span role="cell">${paper.method}</span><span role="cell">${paper.journal}</span></div>`).join("");
   document.querySelector("#paperCount").textContent = `${visible.length} of ${matching.length} ${matching.length === 1 ? "entry" : "entries"}`;
   document.querySelector("#paperEmpty").hidden = matching.length > 0;
   const more = document.querySelector("#paperMore");
@@ -182,6 +182,7 @@ const tour = [
   { title:"The result has boundaries.", copy:"This was an unpublished normal-condition CASIA-B experiment. The holdout set was used for model selection and final reporting, training was not fully deterministic, and no peer review or independent reproduction has occurred." },
 ];
 const tourDialog = document.querySelector("#tourDialog");
+const gaitDialog = document.querySelector("#gaitDialog");
 let tourIndex = 0;
 function renderTour() {
   const item = tour[tourIndex];
@@ -192,9 +193,23 @@ function renderTour() {
   document.querySelector("#tourBack").disabled = tourIndex === 0;
   document.querySelector("#tourNext").textContent = tourIndex === tour.length - 1 ? "Finish" : "Next chapter →";
 }
+let dialogOpener = null;
+function openDialog(dialog) {
+  dialogOpener = document.activeElement;
+  if (typeof dialog.showModal === "function") { dialog.showModal(); return; }
+  // Fallback path: a plain open attribute gives no focus trap and no Escape,
+  // so supply both by hand.
+  dialog.setAttribute("open", "");
+  dialog.addEventListener("keydown", fallbackEscape);
+  const focusable = dialog.querySelector("button, [href], input, select, textarea, [tabindex]");
+  if (focusable) focusable.focus();
+}
+function fallbackEscape(event) {
+  if (event.key === "Escape") { event.preventDefault(); event.currentTarget.close(); }
+}
 document.querySelector("#tourOpen").addEventListener("click", () => {
   tourIndex = 0; renderTour();
-  if (typeof tourDialog.showModal === "function") tourDialog.showModal(); else tourDialog.setAttribute("open", "");
+  openDialog(tourDialog);
 });
 document.querySelector("#tourClose").addEventListener("click", () => tourDialog.close());
 document.querySelector("#tourBack").addEventListener("click", () => { if (tourIndex > 0) { tourIndex -= 1; renderTour(); } });
@@ -203,18 +218,18 @@ document.querySelector("#tourNext").addEventListener("click", () => {
   tourIndex += 1; renderTour();
 });
 
-const gaitDialog = document.querySelector("#gaitDialog");
-document.querySelector("#gaitOpen").addEventListener("click", () => {
-  if (typeof gaitDialog.showModal === "function") gaitDialog.showModal(); else gaitDialog.setAttribute("open", "");
-});
+document.querySelector("#gaitOpen").addEventListener("click", () => openDialog(gaitDialog));
 document.querySelector("#gaitClose").addEventListener("click", () => gaitDialog.close());
 document.querySelector("#gaitContinue").addEventListener("click", () => {
   gaitDialog.close();
   document.querySelector("#research").scrollIntoView({ behavior:"smooth" });
 });
-[tourDialog, gaitDialog].forEach((dialog) => dialog.addEventListener("click", (event) => {
-  if (event.target === dialog) dialog.close();
-}));
-
-const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add("in-view"); }), { threshold:.15 });
-document.querySelectorAll("section").forEach((section) => observer.observe(section));
+[tourDialog, gaitDialog].forEach((dialog) => {
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener("close", () => {
+    dialog.removeEventListener("keydown", fallbackEscape);
+    dialog.removeAttribute("open");
+    if (dialogOpener && typeof dialogOpener.focus === "function") dialogOpener.focus();
+    dialogOpener = null;
+  });
+});

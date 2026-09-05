@@ -2,13 +2,13 @@
 
 > An unpublished undergraduate research project from the Department of Computer Science, University of Ghana (September 2024).
 
-[Explore the interactive case study](./docs/) · [Browse extraction notebooks](./notebooks/extraction/) · [Browse classification notebooks](./notebooks/classification/) · [Open the extraction sheet](./research-materials/extraction-sheet.xlsx) · [Reproducibility record](./REPRODUCIBILITY.md)
+[Explore the interactive case study](./docs/) · [Browse extraction notebooks](./notebooks/extraction/) · [Browse classification notebooks](./notebooks/classification/) · [Reproducibility record](./REPRODUCIBILITY.md)
 
 ## Research question
 
 How does the representation of a silhouette sequence affect a deep neural network's ability to recognise a person by their gait?
 
-We compared five feature representations—Gait Energy Image (GEI), Gait Entropy Image (GEnI), Gait Flow Image (GFI), Motion Silhouette Image (MSI), and our Dynamic Entropy-Weighted Gait Image (DEWGI)—using DenseNet and ResNet classifiers. We then built a project-specific adaptation of GaitSTAR with a fused feature pipeline and an enhanced attention-residual classifier.
+We compared five feature representations: Gait Energy Image (GEI), Gait Entropy Image (GEnI), Gait Flow Image (GFI), Motion Silhouette Image (MSI), and our Dynamic Entropy-Weighted Gait Image (DEWGI), using DenseNet and ResNet classifiers. We then built a project-specific adaptation of GaitSTAR with a fused feature pipeline and an enhanced attention-residual classifier.
 
 ## The research journey
 
@@ -16,7 +16,7 @@ The work began with a structured literature review rather than a predetermined m
 
 | Review stage | Records remaining | Removed at stage |
 |---|---:|---:|
-| Initial database search | 6,952 | — |
+| Initial database search | 6,952 | N/A |
 | Review-protocol filters | 707 | 6,245 |
 | Title and abstract review | 279 | 428 |
 | Final full-text set | 72 | 207 |
@@ -31,7 +31,7 @@ DEWGI combines stable appearance information with pixel-level gait variability. 
 
 ### 2. Enhanced GaitSTAR experiment
 
-The project retained GaitSTAR's core motivation—combining spatial appearance and temporal motion with attention—while implementing a new end-to-end experimental pipeline:
+The project retained GaitSTAR's core motivation, combining spatial appearance and temporal motion with attention, while implementing a new end-to-end experimental pipeline:
 
 1. **Fused representation:** CLAHE contrast enhancement and bilateral filtering, a small CNN appearance stream, Farneback optical-flow magnitude and direction, and temporally weighted pooling.
 2. **Deeper backbone:** a 7×7 convolutional stem followed by residual stages containing 3, 4, 6, and 3 blocks.
@@ -40,7 +40,7 @@ The project retained GaitSTAR's core motivation—combining spatial appearance a
 5. **Dual supervision:** a main classifier plus an auxiliary classifier weighted at 0.4 during training.
 6. **Training changes:** random flips and erasing, 0.1 label smoothing, AdamW with 0.05 weight decay, cosine OneCycle scheduling, and gradient clipping at norm 1.0.
 
-The saved notebook output records a best test accuracy of **98.712%** for 124-way classification under the project's normal-condition split. The final report places this beside published benchmark values, including 97.4% for the original GaitSTAR paper. This is contextual comparison—not a controlled ablation or independent reimplementation of every baseline.
+The saved notebook output records a best test accuracy of **98.712%** for 124-way classification under the project's normal-condition split. The final report places this beside published benchmark values, including 97.4% for the original GaitSTAR paper. This is contextual comparison, not a controlled ablation or independent reimplementation of every baseline.
 
 ## Results at a glance
 
@@ -77,12 +77,10 @@ These results belong to the project's own experimental protocol. They have not b
 │   ├── extraction/           # GEI, GEnI, GFI, MSI, DEWGI, GaitSTAR preprocessing
 │   └── classification/       # DenseNet, ResNet, Enhanced GaitSTAR experiments
 └── research-materials/
-    ├── extraction-sheet.xlsx
-    ├── final-report.docx
-    └── presentation.pptx
+    └── README.md             # What exists and how to request it
 ```
 
-The original dataset, processed datasets, third-party research PDFs, and trained model files are intentionally excluded. They are either large, externally authored, unnecessary for browsing the work, or subject to provider distribution terms.
+The project documentation, presentation, and extraction workbook are not distributed here, because the University of Ghana does not permit public distribution of final-year project files. See [`research-materials/`](./research-materials/) for what is available on request. The original dataset, processed datasets, third-party research PDFs, and trained model files are also intentionally excluded. They are either large, externally authored, unnecessary for browsing the work, or subject to provider distribution terms.
 
 ## View the showcase locally
 

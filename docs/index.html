@@ -6,13 +6,14 @@
     <meta name="description" content="An interactive research case study on silhouette feature representation for gait recognition." />
     <meta name="theme-color" content="#0a0c0b" />
     <title>Silhouette / Signal - Gait Recognition Research</title>
-    <script>document.documentElement.dataset.theme = localStorage.getItem("gait-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");</script>
+    <script>document.documentElement.dataset.theme = localStorage.getItem("dillion-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#research">Skip to content</a>
     <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
     <div class="noise" aria-hidden="true"></div>
     <header class="site-header">
@@ -34,7 +35,7 @@
 
     <main id="top">
       <section class="hero section-pad">
-        <div class="eyebrow reveal"><span class="pulse"></span> Undergraduate research · 2024</div>
+        <div class="eyebrow reveal"><span class="pulse"></span> Undergraduate research · 2023 to 2025</div>
         <div class="hero-grid">
           <div>
             <h1 class="reveal">Can the shape of motion become a <em>signature?</em></h1>
@@ -48,9 +49,9 @@
           </div>
           <div class="hero-visual reveal" aria-label="Animated sequence of gait silhouettes">
             <div class="radar-lines"></div>
-            <div class="frame frame-back"><img src="assets/views/057_nm-01_054.png" alt="" /></div>
-            <div class="frame frame-mid"><img src="assets/views/057_nm-01_072.png" alt="" /></div>
-            <div class="frame frame-front"><img src="assets/views/057_nm-01_090.png" alt="DEWGI representation of a walking subject viewed from 90 degrees" /></div>
+            <div class="frame frame-back"><img src="assets/views/057_nm-01_054.png" alt="" width="240" height="240" /></div>
+            <div class="frame frame-mid"><img src="assets/views/057_nm-01_072.png" alt="" width="240" height="240" /></div>
+            <div class="frame frame-front"><img src="assets/views/057_nm-01_090.png" alt="DEWGI representation of a walking subject viewed from 90 degrees" width="240" height="240" /></div>
             <div class="visual-label"><span>SUBJECT 057</span><span>VIEW 090°</span></div>
           </div>
         </div>
@@ -128,8 +129,9 @@
               <div class="paper-filters" id="paperFilters"><button class="active" data-filter="all">All 85</button><button data-filter="energy">Energy / entropy</button><button data-filter="flow">Flow / motion</button><button data-filter="modern">Deep / modern</button><button data-filter="other">Other</button></div>
             </div>
             <div class="paper-table" role="table" aria-label="Sample from the project extraction sheet">
-              <div class="paper-row paper-head" role="row"><button id="paperYearSort" type="button" aria-label="Sort papers oldest first">YEAR ↓</button><span>PAPER TITLE</span><span>REPRESENTATION</span><span>JOURNAL / VENUE</span></div>
+              <div class="paper-row paper-head" role="row"><span role="columnheader"><button id="paperYearSort" type="button" aria-label="Sort papers oldest first">YEAR ↓</button></span><span role="columnheader">PAPER TITLE</span><span role="columnheader">REPRESENTATION</span><span role="columnheader">JOURNAL / VENUE</span></div>
               <div id="paperRows"></div>
+              <noscript><p style="padding:16px;font-size:14px;line-height:1.6">The searchable inventory of all 85 extraction-sheet entries needs JavaScript. The workbook itself is not publicly distributed and is available on request.</p></noscript>
               <div class="paper-empty" id="paperEmpty" hidden>No matching paper in the extraction-sheet inventory.</div>
               <button class="paper-more" id="paperMore" type="button">Show all 85 entries ↓</button>
             </div>
@@ -172,7 +174,7 @@
           </div>
           <div class="feature-stage">
             <div class="crosshair x"></div><div class="crosshair y"></div>
-            <img id="featureImage" src="assets/representations/gei.png" alt="Gait Energy Image representation" />
+            <img id="featureImage" src="assets/representations/gei.png" alt="Gait Energy Image representation" loading="lazy" decoding="async" width="240" height="240" />
             <div class="scan-line"></div>
           </div>
           <div class="method-copy" aria-live="polite">
@@ -194,7 +196,7 @@
         <div class="views-grid">
           <div><h2>The same person looks different from every angle.</h2><p>Viewpoint variation is one of gait recognition’s defining challenges. Drag the control to inspect the project’s DEWGI output across all eleven CASIA-B camera positions.</p></div>
           <div class="view-console">
-            <div class="view-screen"><img id="viewImage" src="assets/views/057_nm-01_090.png" alt="DEWGI sample at 90 degrees" /><span id="viewAngle">090°</span></div>
+            <div class="view-screen"><img id="viewImage" src="assets/views/057_nm-01_090.png" alt="DEWGI sample at 90 degrees" loading="lazy" decoding="async" width="240" height="240" /><span id="viewAngle">090°</span></div>
             <input id="angleSlider" type="range" min="0" max="10" value="5" step="1" aria-label="Camera angle" />
             <div class="angle-labels"><span>000°</span><span>090°</span><span>180°</span></div>
           </div>
@@ -217,7 +219,7 @@
         <div class="gaitstar-system">
           <div class="gaitstar-image">
             <span>FUSED REPRESENTATION · SUBJECT 057 · 090°</span>
-            <img src="assets/representations/gaitstar.png" alt="Enhanced GaitSTAR fused representation for subject 057 at 90 degrees" />
+            <img src="assets/representations/gaitstar.png" alt="Enhanced GaitSTAR fused representation for subject 057 at 90 degrees" loading="lazy" decoding="async" width="960" height="960" />
             <small>CNN appearance features + dense optical flow + temporal weighting</small>
           </div>
           <div class="architecture-map" aria-label="Implemented Enhanced GaitSTAR architecture">
@@ -236,10 +238,10 @@
 
         <div class="enhancement-browser">
           <div class="enhancement-tabs" role="tablist" aria-label="Implemented GaitSTAR enhancements">
-            <button class="enhancement-tab active" data-enhancement="representation" aria-selected="true"><span>01</span>Representation</button>
-            <button class="enhancement-tab" data-enhancement="architecture" aria-selected="false"><span>02</span>Architecture</button>
-            <button class="enhancement-tab" data-enhancement="supervision" aria-selected="false"><span>03</span>Supervision</button>
-            <button class="enhancement-tab" data-enhancement="training" aria-selected="false"><span>04</span>Training</button>
+            <button class="enhancement-tab active" role="tab" data-enhancement="representation" aria-selected="true"><span>01</span>Representation</button>
+            <button class="enhancement-tab" role="tab" data-enhancement="architecture" aria-selected="false"><span>02</span>Architecture</button>
+            <button class="enhancement-tab" role="tab" data-enhancement="supervision" aria-selected="false"><span>03</span>Supervision</button>
+            <button class="enhancement-tab" role="tab" data-enhancement="training" aria-selected="false"><span>04</span>Training</button>
           </div>
           <div class="enhancement-detail" aria-live="polite">
             <span id="enhancementLabel">WHAT CHANGED · 01</span>
@@ -268,7 +270,10 @@
         <div class="section-index">07 / SFRT RESULTS</div>
         <div class="results-heading"><h2>The representation mattered.</h2><div class="model-switch" role="group" aria-label="Select classifier"><button class="active" data-model="dense">DenseNet</button><button data-model="res">ResNet</button></div></div>
         <div class="results-grid">
-          <div class="chart" id="chart" aria-label="Accuracy by feature representation"></div>
+          <div class="chart" id="chart" aria-label="Accuracy by feature representation"><div class="bar-row"><span>GEI</span><div class="bar-track"><div class="bar-fill" style="width:88.41%"></div></div><strong class="bar-value">88.41%</strong></div><div class="bar-row"><span>GEnI</span><div class="bar-track"><div class="bar-fill" style="width:86.39%"></div></div><strong class="bar-value">86.39%</strong></div><div class="bar-row"><span>GFI</span><div class="bar-track"><div class="bar-fill" style="width:82.96%"></div></div><strong class="bar-value">82.96%</strong></div><div class="bar-row"><span>MSI</span><div class="bar-track"><div class="bar-fill" style="width:83.87%"></div></div><strong class="bar-value">83.87%</strong></div><div class="bar-row best"><span>DEWGI</span><div class="bar-track"><div class="bar-fill" style="width:92.34%"></div></div><strong class="bar-value">92.34%</strong></div></div>
+          <noscript>
+            <p style="margin-top:20px;padding:16px;border-left:3px solid var(--ink);font-size:14px;line-height:1.6">The interactive controls on this page need JavaScript. The figures above are the matched comparison with DenseNet. With ResNet the same five representations scored 81.42%, 80.26%, 81.91%, 80.32% and 88.17%. Enhanced GaitSTAR reached a best recorded holdout accuracy of 98.71%. These are the project's own results, unpublished and not independently reproduced. The code is at <a href="https://github.com/Dillion101/gait-analysis">github.com/Dillion101/gait-analysis</a>.</p>
+          </noscript>
           <aside class="finding-card">
             <span class="mini-label">KEY FINDING</span>
             <div class="big-number" id="bestScore">92.34<span>%</span></div>
@@ -315,7 +320,7 @@
         <div>
           <span class="mini-label">PROJECT</span>
           <h2>Impact of Silhouette Feature Representation on Gait Analysis</h2>
-          <p>An unpublished final-year undergraduate research project completed at the Department of Computer Science, University of Ghana, September 2024.</p>
+          <p>An unpublished final-year undergraduate research project carried out at the Department of Computer Science, University of Ghana. The project documentation was submitted in September 2024 and the work continued into January 2025.</p>
         </div>
         <dl>
           <div><dt>Researchers</dt><dd>Dillion Amartey<br />Jake Sompa Asamoah</dd></div>
